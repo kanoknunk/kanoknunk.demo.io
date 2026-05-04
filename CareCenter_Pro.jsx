@@ -48,14 +48,18 @@ const DS = {
   },
   async save(table,data){
     await this._ls(`cc_${table}`,data);
-    if(this._url){ try{ await fetch(this._url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"set",table,data})}); }catch{} }
+    if(this._url){ try{ 
+      // ✅ จุดที่แก้ 1: เปลี่ยนเป็น text/plain
+      await fetch(this._url,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"set",table,data})}); 
+    }catch{} }
   },
   async syncAll(tables){
     if(!this._url) return {ok:false,msg:"ยังไม่ได้ตั้งค่า URL"};
     const data={};
     for(const t of tables) data[t]=await this._lg(`cc_${t}`,null);
     try{
-      const r=await fetch(this._url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"syncAll",data})});
+      // ✅ จุดที่แก้ 2: เปลี่ยนเป็น text/plain
+      const r=await fetch(this._url,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"syncAll",data})});
       return r.json();
     }catch(e){ return {ok:false,msg:e.message}; }
   },
