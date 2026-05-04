@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+const { useState, useEffect, useMemo } = React;
 
 /* ═══════════════════════════════════════════════
    CONSTANTS
@@ -1027,7 +1027,7 @@ function AdminPage({patients,records,stock,lineToken,gsCfg,showToast,updatePatie
 /* ═══════════════════════════════════════════════
    APP SHELL
 ═══════════════════════════════════════════════ */
-export default function App(){
+function App(){
   const[page,setPage]=useState("dashboard");
   const[records,setRecords]=useState([]);
   const[patients,setPatients]=useState({});
@@ -1135,5 +1135,10 @@ export default function App(){
         </div>
       )}
     </div>
+     
   );
-}
+}// ═══════════════════════════════════════════════
+// RENDER TO DOM
+// ═══════════════════════════════════════════════
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
